@@ -1,0 +1,5 @@
+node_modules/
+./vscode
+commit.sh
+update.sh
+/public
