@@ -46,7 +46,8 @@ module.exports = {
 				options: { presets: ['latest'] },
 				include: path.resolve(__dirname, './js'),
 				exclude: path.resolve(__dirname, './node_modules')
-			}
+			},
+			{ test: /\.pug$/, loader: ['raw-loader', 'pug-html-loader'] }
 		]
 	},
 	plugins: [
@@ -54,7 +55,7 @@ module.exports = {
 
 		new htmlWebpackPlugin({
 			filename: 'index.html',
-			template: './template/index.html',
+			template: './template/index.pug',
 			title: '2048',
 			minify: {
 				removeComments: true,

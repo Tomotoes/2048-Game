@@ -6,7 +6,8 @@
 	"scripts": {
 		"start": "webpack --progress --colors",
 		"server": "webpack-dev-server --hot --colors",
-		"watch": "webpack --watch --colors --display-error-details --verbose"
+		"watch": "webpack --watch --colors --display-error-details --verbose",
+		"deploy":"cd D:/Projects/2048/public && git add -A && git commit -am\"commit 2048\" && git push -f origin master"
 	},
 	"author": "Simon Ma",
 	"license": "MIT",
@@ -24,8 +25,12 @@
 		"less-loader": "^4.1.0",
 		"open-browser-webpack-plugin": "0.0.5",
 		"postcss-loader": "^2.0.9",
+		"pug": "^2.0.3",
+		"pug-html-loader": "^1.1.5",
+		"raw-loader": "^1.0.0",
 		"style-loader": "^0.19.0",
-		"webpack-dev-server": "^2.9.7",
-		"webpack": "^3.6.0"
+		"webpack": "^3.6.0",
+		"webpack-cli": "^3.3.0",
+		"webpack-dev-server": "^2.9.7"
 	}
 }
