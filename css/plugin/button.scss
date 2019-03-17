@@ -50,24 +50,24 @@
 		opacity: 0.8 !important;
 	}
 	&-primary {
-		background-color: #1b9af7;
-		border-color: #1b9af7;
+		background-color: #bbada0;
+		border-color: #bbada0;
 		color: #fff;
 		&:visited {
 			color: #fff;
 		}
 		&:hover,
 		&:focus {
-			background-color: #4cb0f9;
-			border-color: #4cb0f9;
+			background-color: #bbada0;
+			border-color: #bbada0;
 			color: #fff;
 		}
 		&:active,
 		&.active,
 		&.is-active {
-			background-color: #2798eb;
-			border-color: #2798eb;
-			color: #0880d7;
+			background-color: #8f7a66;
+			border-color: #8f7a66;
+			color: #8f7a66;
 		}
 	}
 
@@ -92,16 +92,16 @@
 			box-shadow: 0 2px 0 #bbbbbb, 0 3px 3px rgba(0, 0, 0, 0.2);
 		}
 		&.button-primary {
-			box-shadow: 0 7px 0 #0880d7, 0 8px 3px rgba(0, 0, 0, 0.3);
+			box-shadow: 0 7px 0 #8f7a66, 0 8px 3px rgba(0, 0, 0, 0.3);
 		}
 		&.button-primary:hover,
 		&.button-primary:focus {
-			box-shadow: 0 7px 0 #077ace, 0 8px 3px rgba(0, 0, 0, 0.3);
+			box-shadow: 0 7px 0 #8f7a66, 0 8px 3px rgba(0, 0, 0, 0.3);
 		}
 		&.button-primary:active,
 		&.button-primary.active,
 		&.button-primary.is-active {
-			box-shadow: 0 2px 0 #0662a6, 0 3px 3px rgba(0, 0, 0, 0.2);
+			box-shadow: 0 2px 0 #8f7a66, 0 3px 3px rgba(0, 0, 0, 0.2);
 		}
 	}
 }
@@ -111,7 +111,7 @@
 .button-primary.button-border-thick,
 .button-border-thin.button-primary,
 .button-border-thick.button-primary {
-	color: #1b9af7;
+	color: #bbada0;
 }
 .button-border.button-primary:hover,
 .button-primary.button-border-thin:hover,
@@ -123,7 +123,7 @@
 .button-border-thin.button-primary:focus,
 .button-border-thick.button-primary:hover,
 .button-border-thick.button-primary:focus {
-	background-color: rgba(76, 176, 249, 0.9);
+	background-color: #bbada0;
 	color: rgba(255, 255, 255, 0.9);
 }
 .button-border.button-primary:active,
@@ -141,7 +141,7 @@
 .button-border-thick.button-primary:active,
 .button-border-thick.button-primary.active,
 .button-border-thick.button-primary.is-active {
-	background-color: rgba(39, 152, 235, 0.7);
+	background-color: #bbada0;
 	color: rgba(255, 255, 255, 0.5);
 	opacity: 0.3;
 }

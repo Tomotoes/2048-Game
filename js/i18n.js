@@ -1,6 +1,6 @@
 window.langs = {
 	en: {
-		els: ['Score', 'Best', 'Restart'],
+		els: ['Score :', 'Best :', 'Restart'],
 		introduce: {
 			title: 'Game Rule',
 			content:
@@ -13,7 +13,7 @@ window.langs = {
 		}
 	},
 	cn: {
-		els: ['当前分数', '最高分数', '新的游戏'],
+		els: ['当前分数 :', '最高分数 :', '新的游戏'],
 		introduce: {
 			title: '游戏规则',
 			content:

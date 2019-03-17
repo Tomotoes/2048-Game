@@ -5,26 +5,31 @@ header {
 	text-align: center;
 	font-family: Arial;
 	h1 {
-		font-size: 40px;
-		font-weight: bold;
-		text-shadow: 0 0 2px #1d0303;
-		margin: 0;
+		color: #fff;
+		font-family: 'Comic Sans MS', 'Helvetica Neue', 'Microsoft Yahei',
+			'Microsoft Yahei', -apple-system, sans-serif;
+		text-shadow: 0 0 2px #fafafa;
+		margin: 0 auto -10px;
 		letter-spacing: 2px;
 	}
 	p {
 		display: inline-block;
-		font-size: 20px;
-		margin: 15px auto 20px;
+		font-size: 18px;
 		padding: 5px;
 		border-radius: 10px;
 		box-shadow: inset 0px 1px 20px 0px #8f7a66;
 		text-shadow: 0 0 2px #ccc;
+		.lang {
+			color: #666;
+		}
 	}
 	#score {
-		margin-right: 30px;
-		@include Text;
+		@include Text();
 	}
 	#maxscore {
-		@include Text(#000);
+		@include Text();
+	}
+	@media screen and (max-width: 800px) {
+		margin: 60px auto 15px;
 	}
 }

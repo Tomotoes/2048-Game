@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "webpack --progress --colors",
 		"dev": "webpack-dev-server",
-		"deploy": "cd D:/Projects/2048/public && git add -A && git commit -am\"commit 2048\" && git push -f origin master"
+		"deploy": "cd D:/Projects/2048/public && git init && git remote add origin  https://github.com/Tomotoes/2048.git && git add -A && git commit -am\"commit 2048\" && git push -f origin master"
 	},
 	"author": "Simon Ma",
 	"license": "MIT",

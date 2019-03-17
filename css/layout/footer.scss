@@ -1,6 +1,9 @@
 #newGameBtn {
 	display: block;
-	margin: 20px auto 10px;
+	margin: 10px auto 10px;
 	width: 180px;
-  cursor: url("https://tomotoes.com/images/blog/pointer.cur"), auto !important;
+	cursor: url('https://tomotoes.com/images/blog/pointer.cur'), auto !important;
+	@media screen and (max-width: 800px) {
+		margin: 20px auto 10px;
+	}
 }
