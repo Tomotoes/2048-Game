@@ -298,30 +298,11 @@ function moveDown() {
 	return true
 }
 
+const keys = { '37': moveLeft, '87': moveUp, '68': moveRight, '83': moveDown, '65': moveLeft, '38': moveUp, '39': moveRight, '40': moveDown }
+
 $(document).on('keydown', e => {
-	if (e.keyCode === 37 || e.keyCode === 65) {
-		if (moveLeft()) {
-			e.preventDefault()
-
-			setTimeout(() => generateOneNumver(), 210)
-			setTimeout(() => isGameover(), 300)
-		}
-	} else if (e.keyCode === 38 || e.keyCode === 87) {
-		if (moveUp()) {
-			e.preventDefault()
-
-			setTimeout(() => generateOneNumver(), 210)
-			setTimeout(() => isGameover(), 300)
-		}
-	} else if (e.keyCode === 39 || e.keyCode === 68) {
-		if (moveRight()) {
-			e.preventDefault()
-
-			setTimeout(() => generateOneNumver(), 210)
-			setTimeout(() => isGameover(), 300)
-		}
-	} else if (e.keyCode === 40 || e.keyCode === 83) {
-		if (moveDown()) {
+	if (Object.keys(keys).some(el => el == e.keyCode)) {
+		if (keys[e.keyCode]()) {
 			e.preventDefault()
 
 			setTimeout(() => generateOneNumver(), 210)
@@ -338,13 +319,13 @@ let endX = 0
 let endY = 0
 
 document.addEventListener('touchstart', e => {
-	startX = event.touches[0].pageX
-	startY = event.touches[0].pageY
+	startX = e.touches[0].pageX
+	startY = e.touches[0].pageY
 })
 
 document.addEventListener('touchend', e => {
-	endX = event.changedTouches[0].pageX
-	endY = event.changedTouches[0].pageY
+	endX = e.changedTouches[0].pageX
+	endY = e.changedTouches[0].pageY
 
 	const deltaX = endX - startX
 	const deltaY = endY - startY
@@ -359,45 +340,18 @@ document.addEventListener('touchend', e => {
 		return
 	}
 
-	// X 轴滑动
-	if (absX > absY) {
-		/* 右滑动 */
-		if (deltaX > 0) {
-			if (moveRight()) {
-				e.preventDefault()
-
-				setTimeout(() => generateOneNumver(), 210)
-				setTimeout(() => isGameover(), 300)
-			}
-		} else {
-			/* 左滑动 */
-			if (moveLeft()) {
-				e.preventDefault()
-
-				setTimeout(() => generateOneNumver(), 210)
-				setTimeout(() => isGameover(), 300)
-			}
-		}
-	}
-	// Y 轴滑动
-	else {
-		/* 下滑动 */
-		if (deltaY > 0) {
-			if (moveDown()) {
-				e.preventDefault()
-
-				setTimeout(() => generateOneNumver(), 210)
-				setTimeout(() => isGameover(), 300)
-			}
-		} else {
-			/* 上滑动 */
-			if (moveUp()) {
-				e.preventDefault()
-
-				setTimeout(() => generateOneNumver(), 210)
-				setTimeout(() => isGameover(), 300)
-			}
-		}
+	if (
+		absX > absY
+			? deltaX > 0
+				? moveRight()
+				: moveLeft()
+			: deltaY > 0
+			? moveDown()
+			: moveUp()
+	) {
+		e.preventDefault()
+		setTimeout(() => generateOneNumver(), 210)
+		setTimeout(() => isGameover(), 300)
 	}
 })
 
