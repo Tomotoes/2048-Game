@@ -16,7 +16,8 @@ module.exports = {
 	devServer: {
 		contentBase: './public',
 		inline: true,
-		hot: true
+		hot: true,
+		open:true
 	},
 	resolve: {
 		extensions: ['.js', '.html', '.css', '.txt', '.scss', '.ejs', '.json'],

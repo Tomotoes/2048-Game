@@ -1,7 +1,7 @@
 {
 	"name": "2048",
 	"version": "1.0.0",
-	"description": "Web2048Game",
+	"description": "2048-Game",
 	"main": "index.js",
 	"scripts": {
 		"build": "webpack --progress --colors",
@@ -9,6 +9,7 @@
 		"deploy": "cd D:/Projects/2048/public && git init && git remote add origin  https://github.com/Tomotoes/2048.git && git add -A && git commit -am\"commit 2048\" && git push -f origin master"
 	},
 	"author": "Simon Ma",
+	"home": "https://github.com/Tomotoes/2048-Game",
 	"license": "MIT",
 	"devDependencies": {
 		"autoprefixer": "^9.5.0",
