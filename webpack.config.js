@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const htmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
 	entry: {
@@ -18,7 +19,7 @@ module.exports = {
 		hot: true
 	},
 	resolve: {
-		extensions: ['.js', '.html', '.css', '.txt', '.less', '.ejs', '.json'],
+		extensions: ['.js', '.html', '.css', '.txt', '.scss', '.ejs', '.json'],
 		alias: {
 			template: path.resolve(__dirname, 'template/'),
 			css: path.resolve(__dirname, 'css/')
@@ -27,7 +28,7 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.(css|less)?$/,
+				test: /\.(css|scss)?$/,
 				use: ExtractTextPlugin.extract({
 					fallback: 'style-loader',
 					use: [
@@ -36,7 +37,7 @@ module.exports = {
 							loader: 'postcss-loader',
 							options: { plugins: loader => [require('autoprefixer')()] }
 						},
-						{ loader: 'less-loader' }
+						{ loader: 'sass-loader' }
 					]
 				})
 			},
@@ -47,11 +48,17 @@ module.exports = {
 				include: path.resolve(__dirname, './js'),
 				exclude: path.resolve(__dirname, './node_modules')
 			},
-			{ test: /\.pug$/, loader: ['raw-loader', 'pug-html-loader'] }
+			{
+				test: /\.pug$/,
+				use: {
+					loader: 'pug-loader',
+					options: { self: true, pretty: true }
+				}
+			}
 		]
 	},
 	plugins: [
-		new CleanWebpackPlugin('public'),
+		new CleanWebpackPlugin(),
 
 		new htmlWebpackPlugin({
 			filename: 'index.html',
@@ -70,15 +77,14 @@ module.exports = {
 
 		new webpack.BannerPlugin('Anthor:Simon'),
 
-		new webpack.optimize.UglifyJsPlugin({
-			compress: { warnings: false }
-		}),
-
 		new webpack.ProvidePlugin({
 			$: 'jquery',
 			jQuery: 'jquery'
 		}),
 
 		new webpack.HotModuleReplacementPlugin()
-	]
+	],
+	optimization: {
+		minimizer: [new UglifyJsPlugin()]
+	}
 }

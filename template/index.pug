@@ -1,6 +1,9 @@
 doctype html
-html(lang="zh-CN")
-	include components/head.pug
+html
+	include layout/head
 	body
-		include components/header.pug
-		include components/grid.pug
+		include plugin/githubFork
+		include layout/header
+		include layout/grid
+		include layout/footer
+		include plugin/script

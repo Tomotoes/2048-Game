@@ -160,13 +160,10 @@ export function noBlockVertical(col, row1, row2, board) {
 }
 
 export function noMove(board) {
-	if (
+	return !(
 		canMoveDown(board) ||
 		canMoveUp(board) ||
 		canMoveLeft(board) ||
 		canMoveRight(board)
-	) {
-		return false
-	}
-	return true
+	)
 }

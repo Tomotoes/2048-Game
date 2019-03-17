@@ -1,0 +1,30 @@
+header {
+	display: block;
+	margin: 0 auto;
+	width: 100%;
+	text-align: center;
+	font-family: Arial;
+	h1 {
+		font-size: 40px;
+		font-weight: bold;
+		text-shadow: 0 0 2px #1d0303;
+		margin: 0;
+		letter-spacing: 2px;
+	}
+	p {
+		display: inline-block;
+		font-size: 20px;
+		margin: 15px auto 20px;
+		padding: 5px;
+		border-radius: 10px;
+		box-shadow: inset 0px 1px 20px 0px #8f7a66;
+		text-shadow: 0 0 2px #ccc;
+	}
+	#score {
+		margin-right: 30px;
+		@include Text;
+	}
+	#maxscore {
+		@include Text(#000);
+	}
+}

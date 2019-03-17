@@ -1,0 +1,34 @@
+.counter {
+	display: inline-block;
+	margin-bottom: -10px;
+	span {
+		position: relative;
+		display: inline-block;
+		width: 30px;
+		height: 30px;
+		line-height: 44px;
+		overflow: hidden;
+		i {
+			position: absolute;
+			top: 0;
+			left: 0px;
+			display: inline-block;
+			height: 100%;
+			width: 100%;
+			font-style: normal;
+			transition: top 0.3s;
+		}
+
+		@for $i from 0 through 9 {
+			&.n#{$i} {
+				i {
+					@for $j from 0 through 9 {
+						&:nth-child(#{$j + 1}) {
+							top: calc(#{$i - $j} * 110%);
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,4 @@
+header.fade
+	h1#title 2048
+	- const digit =  `<span>${Array.from({ length: 10 }, (el, idx) => (el = `<i>${idx}</i>`)).join('')}</span>`.repeat(4)
+	p #[span.lang]: #[span#score.counter !{digit}]#[span.lang]: #[span#maxscore.counter !{digit}]

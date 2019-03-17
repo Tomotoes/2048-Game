@@ -1,5 +1,8 @@
 import * as support from './support'
 
+import swal from 'sweetalert'
+import newGame from './main'
+
 export function showNumber(i, j, number) {
 	const numberCell = $(`#number-cell-${i}-${j}`)
 
@@ -32,23 +35,60 @@ export function showMove(fromx, fromy, tox, toy) {
 	)
 }
 
+function setCounter(count, selector) {
+	let $digital = $(`${selector} span`)
+
+	for (let i = $digital.length - 1; i >= 0; i--) {
+		let val = parseInt(count / Math.pow(10, i), 10)
+		count = count % Math.pow(10, i)
+		$digital.eq($digital.length - 1 - i).attr('class', `n${val % 10}`)
+	}
+}
 export function updateScore(score) {
-	$('#score').text(score)
+	if (score === 0) {
+		updateMaxScore(maxScore)
+	}
+	setCounter(+score, '#score')
+	if (score > maxScore) {
+		updateMaxScore(score)
+	}
 }
 export function updateMaxScore(score) {
-	$('#maxscore').text(score)
+	setCounter(+score, '#maxscore')
 }
 
-export function showGameover(content) {
-	$('#grid-container').hide(1000)
-	$('p').after(`<div id="gameover"><h1>${content}</h1></div>`)
+export function showGameover(isNewMaxScore) {
+	const content = isNewMaxScore
+		? lang.gameOver.newMaxScoreTip
+		: lang.gameOver.failToNewMaxScoreTip
 
-	setTimeout(function() {
-		$('#gameover').animate(
-			{
-				opacity: '1'
-			},
-			1000
-		)
-	}, 0)
+	swal({
+		title: 'Game Over.',
+		text: content,
+		icon: 'success',
+		buttons: lang.gameOver.buttons,
+		dangerMode: true
+	}).then(willReStart => {
+		if (willReStart) {
+			newGame()
+		}
+	})
 }
+
+const fadeEls = [...document.querySelectorAll('.fade')]
+
+window.addEventListener('load', function () {
+	fadeEls.forEach(e => e.classList.add('in'))
+	if (!localStorage.getItem('hadPlay')) {
+		swal({
+			type: 'info',
+			title: lang.introduce.title,
+			text: lang.introduce.content
+		})
+		localStorage.setItem('hadPlay', true)
+	}
+})
+
+window.addEventListener('beforeunload', function () {
+	fadeEls.forEach(e => e.classList.remove('in'))
+})

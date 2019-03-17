@@ -1,6 +1,18 @@
-const board = new Array()
-const hasConflicted = new Array()
-let score = 0
+const board = []
+const hasConflicted = []
+
+Object.defineProperty(window, 'score', {
+	_value: 0,
+	get() {
+		return this._value
+	},
+	set(value) {
+		this._value = value
+		animation.updateScore(value)
+	}
+})
+
+window.maxScore = localStorage.getItem('maxScore') || 0
 
 import * as support from './support'
 
@@ -47,8 +59,8 @@ function updateBoardView() {
 
 function Init() {
 	for (let i = 0; i < 4; ++i) {
-		board[i] = new Array()
-		hasConflicted[i] = new Array()
+		board[i] = []
+		hasConflicted[i] = []
 		for (let j = 0; j < 4; ++j) {
 			board[i][j] = 0
 			hasConflicted[i][j] = false
@@ -65,9 +77,6 @@ function Init() {
 	updateBoardView()
 
 	score = 0
-	animation.updateScore(score)
-	const maxScore = localStorage.getItem('maxScore') || 0
-	$('#maxscore').text(maxScore)
 }
 
 function generateOneNumver() {
@@ -113,14 +122,12 @@ let noGameover = false
 function isGameover() {
 	if (support.noSpace(board) && support.noMove(board) && !noGameover) {
 		noGameover = true
+		const isNewMaxScore = score > maxScore
+		setTimeout(() => animation.showGameover(isNewMaxScore), 500)
 
-		const maxScore = localStorage.getItem('maxScore')
-		if (maxScore < score || !maxScore) {
+		if (isNewMaxScore) {
+			maxScore = score
 			localStorage.setItem('maxScore', score)
-			animation.updateMaxScore(localStorage.getItem('maxScore'))
-			setTimeout(() => animation.showGameover('你创造了历史！'), 500)
-		} else {
-			setTimeout(() => animation.showGameover('笨蛋啊~'), 500)
 		}
 	}
 }
@@ -144,7 +151,6 @@ function moveLeft() {
 							board[i][j] = 0
 
 							score += board[i][k]
-							animation.updateScore(score)
 
 							hasConflicted[i][k] = true
 						}
@@ -176,7 +182,6 @@ function moveRight() {
 							board[i][j] = 0
 
 							score += board[i][k]
-							animation.updateScore(score)
 							hasConflicted[i][k] = true
 						}
 					}
@@ -207,7 +212,6 @@ function moveUp() {
 							board[i][j] = 0
 
 							score += board[k][j]
-							animation.updateScore(score)
 							hasConflicted[k][j] = true
 						}
 					}
@@ -238,7 +242,6 @@ function moveDown() {
 							board[i][j] = 0
 
 							score += board[k][j]
-							animation.updateScore(score)
 							hasConflicted[k][j] = true
 						}
 					}
