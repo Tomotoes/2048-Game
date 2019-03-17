@@ -24,3 +24,20 @@
 		position: absolute;
 	}
 }
+
+@keyframes pop {
+	0% {
+		transform: scale(1);
+	}
+
+	50% {
+		transform: scale(1.2);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}
+.cell-merged{
+	animation: pop 200ms ease 100ms;
+}

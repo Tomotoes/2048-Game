@@ -1,22 +1,35 @@
-const board = []
-const hasConflicted = []
+window.board = []
+window.hasConflicted = []
 
 Object.defineProperty(window, 'score', {
-	_value: 0,
+	_score: 0,
 	get() {
-		return this._value
+		return this._score
 	},
 	set(value) {
-		this._value = value
+		this._score = value
 		animation.updateScore(value)
 	}
 })
 
-window.maxScore = localStorage.getItem('maxScore') || 0
+Object.defineProperty(window, 'maxScore', {
+	_maxScore: 0,
+	get() {
+		return this._maxScore
+	},
+	set(value) {
+		this._maxScore = value
+		animation.updateMaxScore(value)
+	}
+})
+
+window.minScore = Number.parseInt(localStorage.getItem('minScore'))
 
 import * as support from './support'
 
 import * as animation from './animation'
+
+window.maxValue = 0
 
 function updateBoardView() {
 	$('.number-cell').remove()
@@ -47,6 +60,7 @@ function updateBoardView() {
 				})
 
 				numberCell.text(board[i][j])
+				maxValue = Math.max(maxValue, board[i][j])
 			}
 			hasConflicted[i][j] = false
 		}
@@ -56,15 +70,20 @@ function updateBoardView() {
 		'font-size': `${0.4 * support.cellSideLength}px`
 	})
 }
+export default function newGame(playNew) {
+	support.prepareForMobile()
 
-function Init() {
+	/* 初始化棋盘格 */
+	Init(playNew)
+
+	if (playNew) {
+		generateOneNumver()
+		generateOneNumver()
+	}
+}
+function Init(playNew) {
 	for (let i = 0; i < 4; ++i) {
-		board[i] = []
-		hasConflicted[i] = []
 		for (let j = 0; j < 4; ++j) {
-			board[i][j] = 0
-			hasConflicted[i][j] = false
-
 			const gridCell = $(`#grid-cell-${i}-${j}`)
 
 			gridCell.css({
@@ -73,57 +92,83 @@ function Init() {
 			})
 		}
 	}
+	if (!localStorage.getItem('score') || playNew) {
+		for (let i = 0; i < 4; ++i) {
+			board[i] = []
+			hasConflicted[i] = []
+			for (let j = 0; j < 4; ++j) {
+				board[i][j] = 0
+				hasConflicted[i][j] = false
+			}
+		}
+		score = 0
+		maxScore = maxScore ? maxScore : 0
+		maxValue = 0
+	} else {
+		board = JSON.parse(localStorage.getItem('board')) || []
+		score = Number.parseInt(localStorage.getItem('score')) || 0
+		maxScore = Number.parseInt(localStorage.getItem('maxScore')) || 0
+		hasConflicted = JSON.parse(localStorage.getItem('hasConflicted')) || []
+		maxValue = Number.parseInt(localStorage.getItem('maxValue')) || 0
+	}
 
 	updateBoardView()
+}
 
-	score = 0
+function generateRandomNumber() {
+	return maxValue < 512
+		? Math.random() < 0.5
+			? 2
+			: Math.random() > 0.85
+			? 8
+			: 4
+		: Math.random() < 0.2
+		? 2
+		: Math.random() > 0.6
+		? 4
+		: 8
 }
 
 function generateOneNumver() {
 	if (support.noSpace(board)) {
 		return false
 	}
-
-	/* 随机一个位置 */
-	let randomX = parseInt(Math.floor(Math.random() * 4))
-	let randomY = parseInt(Math.floor(Math.random() * 4))
-	let failTimes = 0
-	while (failTimes < 50) {
-		if (board[randomX][randomY] === 0) {
-			break
-		}
-		randomX = parseInt(Math.floor(Math.random() * 4))
-		randomY = parseInt(Math.floor(Math.random() * 4))
-		failTimes++
-	}
-	if (failTimes === 50) {
-		for (let i = 0; i < 4; ++i) {
-			for (let j = 0; j < 4; ++j) {
-				if (board[i][j] === 0) {
-					randomX = i
-					randomY = j
-				}
+	const emptyCells = []
+	for (let i = 0; i < 4; ++i) {
+		for (let j = 0; j < 4; ++j) {
+			if (board[i][j] === 0) {
+				emptyCells.push({ x: i, y: j })
 			}
 		}
 	}
+	if (emptyCells.length === 0) {
+		return false
+	}
 
-	/* 随机一个数字 */
-	const randomNumber = Math.random() < 0.5 ? 2 : 4
+	const { x: randomX, y: randomY } = emptyCells[
+		Math.floor(Math.random() * emptyCells.length)
+	]
 
-	/* 在随机位置显示随机数字 */
+	const randomNumber = generateRandomNumber()
+
 	board[randomX][randomY] = randomNumber
 
 	animation.showNumber(randomX, randomY, randomNumber)
 
 	return true
 }
-let noGameover = false
 
 function isGameover() {
-	if (support.noSpace(board) && support.noMove(board) && !noGameover) {
-		noGameover = true
+	if (support.noSpace(board) && support.noMove(board)) {
+		const isNewMinScore = minScore ? minScore > score : false
 		const isNewMaxScore = score > maxScore
-		setTimeout(() => animation.showGameover(isNewMaxScore), 500)
+
+		setTimeout(() => animation.showGameover(isNewMaxScore, isNewMinScore), 500)
+
+		if (!minScore || isNewMinScore) {
+			localStorage.setItem('minScore', score)
+			minScore = score
+		}
 
 		if (isNewMaxScore) {
 			maxScore = score
@@ -146,7 +191,7 @@ function moveLeft() {
 							board[i][k] = board[i][j]
 							board[i][j] = 0
 						} else if (board[i][k] === board[i][j] && !hasConflicted[i][k]) {
-							animation.showMove(i, j, i, k)
+							animation.showMove(i, j, i, k, true)
 							board[i][k] += board[i][j]
 							board[i][j] = 0
 
@@ -177,7 +222,7 @@ function moveRight() {
 							board[i][k] = board[i][j]
 							board[i][j] = 0
 						} else if (board[i][k] === board[i][j] && !hasConflicted[i][k]) {
-							animation.showMove(i, j, i, k)
+							animation.showMove(i, j, i, k, true)
 							board[i][k] += board[i][j]
 							board[i][j] = 0
 
@@ -207,7 +252,7 @@ function moveUp() {
 							board[k][j] = board[i][j]
 							board[i][j] = 0
 						} else if (board[k][j] === board[i][j] && !hasConflicted[k][j]) {
-							animation.showMove(i, j, k, j)
+							animation.showMove(i, j, k, j, true)
 							board[k][j] += board[i][j]
 							board[i][j] = 0
 
@@ -237,7 +282,7 @@ function moveDown() {
 							board[k][j] = board[i][j]
 							board[i][j] = 0
 						} else if (board[k][j] === board[i][j] && !hasConflicted[k][j]) {
-							animation.showMove(i, j, k, j)
+							animation.showMove(i, j, k, j, true)
 							board[k][j] += board[i][j]
 							board[i][j] = 0
 
@@ -251,16 +296,6 @@ function moveDown() {
 	}
 	setTimeout(() => updateBoardView(), 200)
 	return true
-}
-export default function newGame() {
-	support.prepareForMobile()
-
-	/* 初始化棋盘格 */
-	Init()
-
-	/* 在随机两个格子生成数字 */
-	generateOneNumver()
-	generateOneNumver()
 }
 
 $(document).on('keydown', e => {
@@ -295,9 +330,7 @@ $(document).on('keydown', e => {
 	}
 })
 
-$('#newGameBtn').on('click', () => {
-	newGame()
-})
+$('#newGameBtn').on('click', newGame.bind(true))
 
 let startX = 0
 let startY = 0

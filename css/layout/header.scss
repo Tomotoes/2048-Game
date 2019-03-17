@@ -5,7 +5,7 @@ header {
 	text-align: center;
 	font-family: Arial;
 	h1 {
-		color: #fff;
+		color: #776e65;
 		font-family: 'Comic Sans MS', 'Helvetica Neue', 'Microsoft Yahei',
 			'Microsoft Yahei', -apple-system, sans-serif;
 		text-shadow: 0 0 2px #fafafa;
@@ -16,18 +16,17 @@ header {
 		display: inline-block;
 		font-size: 18px;
 		padding: 5px;
-		border-radius: 10px;
+		border-radius: 5px;
 		box-shadow: inset 0px 1px 20px 0px #8f7a66;
 		text-shadow: 0 0 2px #ccc;
-		.lang {
-			color: #666;
-		}
+		background: #bbada0;
+    color: #fff;
 	}
 	#score {
-		@include Text();
+		@include Text(#f6f6f6);
 	}
 	#maxscore {
-		@include Text();
+		@include Text(#f6f6f6);
 	}
 	@media screen and (max-width: 800px) {
 		margin: 60px auto 15px;

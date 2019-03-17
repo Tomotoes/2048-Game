@@ -11,13 +11,13 @@ module.exports = {
 	},
 	output: {
 		path: `${__dirname}/public`,
-		filename: 'main.js'
+		filename: '[name].[hash].js'
 	},
 	devServer: {
 		contentBase: './public',
 		inline: true,
 		hot: true,
-		open:true
+		open: true
 	},
 	resolve: {
 		extensions: ['.js', '.html', '.css', '.txt', '.scss', '.ejs', '.json'],
@@ -74,7 +74,7 @@ module.exports = {
 			}
 		}),
 
-		new ExtractTextPlugin('./css/[name].min.css'),
+		new ExtractTextPlugin('./css/[name].[hash].css'),
 
 		new webpack.BannerPlugin('Anthor:Simon'),
 

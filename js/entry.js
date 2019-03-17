@@ -4,4 +4,4 @@ import './i18n'
 
 import newGame from './main'
 
-newGame()
+newGame(!localStorage.getItem('score'))

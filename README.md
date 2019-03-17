@@ -23,5 +23,8 @@ If it brings you happiness, please buy me a cup of coffee.
   <img src="https://tomotoes.com/images/blog/alipay.png" alt="Reward"/>
 </p>
 
+## Thanks
+**感谢刘琳小朋友 以其可爱的舍友们测试、提议 ，感谢家铭同学优化代码的建议。**
+
 ## License
 2048 is licensed under the [MIT license.](https://github.com/gabrielecirulli/2048/blob/master/LICENSE.txt)
