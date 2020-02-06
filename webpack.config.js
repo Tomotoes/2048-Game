@@ -10,8 +10,12 @@ module.exports = {
 		app: './js/entry.js'
 	},
 	output: {
-		path: `${__dirname}/public`,
-		filename: '[name].[hash].js'
+		path: `${__dirname}/public/`,
+		filename: '[name].[hash].js',
+		publicPath:
+			process.env.NODE_ENV === 'DEPLOY'
+				? 'https://cdn.jsdelivr.net/gh/Tomotoes/2048/'
+				: '/'
 	},
 	devServer: {
 		contentBase: './public',
@@ -74,7 +78,7 @@ module.exports = {
 			}
 		}),
 
-		new ExtractTextPlugin('./css/[name].[hash].css'),
+		new ExtractTextPlugin('css/[name].[hash].css'),
 
 		new webpack.BannerPlugin('Anthor:Simon'),
 
