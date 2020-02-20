@@ -8,7 +8,7 @@
 		"predev": "cross-env NODEV_ENV=DEV npm run build",
 		"dev": "webpack-dev-server",
 		"predeploy": "cross-env NODEV_ENV=DEPLOY npm run build",
-		"deploy": "cd D:/Blog/2048/public && git init && git remote add origin  https://github.com/Tomotoes/2048.git && git add -A && git commit -am\"commit 2048\" && git push -f origin master"
+		"deploy": "cd public && git init && git remote add origin git@github.com:Tomotoes/2048.git && git add -A && git commit -am\"commit 2048\" && git push -f origin master"
 	},
 	"author": "Simon Ma",
 	"home": "https://github.com/Tomotoes/2048-Game",

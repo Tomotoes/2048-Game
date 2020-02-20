@@ -13,7 +13,7 @@ module.exports = {
 		path: `${__dirname}/public/`,
 		filename: '[name].[hash].js',
 		publicPath:
-			process.env.NODE_ENV === 'DEPLOY'
+			process.env.NODE_ENV !== 'DEV'
 				? 'https://cdn.jsdelivr.net/gh/Tomotoes/2048/'
 				: '/'
 	},
